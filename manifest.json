@@ -1,0 +1,67 @@
+{
+  "name": "slax Application Launcher",
+  "version": "0.9.0",
+  "description": "Launch and run a slax applicaiton inside Chrome.",
+  "manifest_version": 2,
+  "icons": {
+    "128": "images/icon.png",
+    "48": "images/icon.png",
+    "16": "images/icon.png"
+  },
+
+  "permissions": [ "fileBrowserHandler", "fileSystem","webRequest", "webRequestBlocking", "\u003Call_urls>", "tabs", "webNavigation", "storage","unlimitedStorage" ],
+
+  "storage": {
+      "managed_schema": "preferences_schema.json"
+  },
+
+  "web_accessible_resources": [
+    "themes/originalTheme.css",
+    "themes/cleanTheme.css",
+    "http:/*", 
+    "https:/*", 
+    "ftp:/*", 
+    "file:/*", 
+    "chrome-extension:/*", 
+    "blob:*", 
+    "data:*", 
+    "filesystem:/*", 
+    "drive:*" 
+  ],
+
+  "background": {
+      "page": "background/handler.html"
+  },
+
+  "options_page": "options/options.html",
+  "options_ui": {
+      "chrome_style": true,
+      "page": "options/options.html"
+  },
+  
+  "page_action": {
+      "default_icon": {
+         "19": "images/icon.png",
+         "38": "images/icon.png"
+      },
+      "default_popup": "pageAction/popup.html",
+      "default_title": "Run slax applicaiton"
+  },
+
+  "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "content/style.css" ],
+      "js": ["content/script.js"],
+      "matches": [ "http://*/*", "https://*/*", "ftp://*/*", "file://*/*" ],
+      "run_at": "document_start"
+  } ],
+
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "file_browser_handlers": [ {
+      "default_title": "Launch slax applicaiton",
+      "file_filters": [ "filesystem:*.slax" ],
+      "id": "run-as-slax"
+   } ]
+
+}
